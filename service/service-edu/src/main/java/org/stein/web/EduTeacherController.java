@@ -4,9 +4,11 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.stein.handler.exception.GuliException;
 import org.stein.pojo.dto.EduTeacherDTO;
 import org.stein.pojo.po.EduTeacherPO;
 import org.stein.result.Result;
+import org.stein.result.StatusCode;
 import org.stein.service.EduTeacherService;
 
 import java.time.LocalDateTime;
@@ -18,6 +20,7 @@ import java.util.Map;
  * @author stein
  * @date 2024/3/6
  */
+@CrossOrigin
 @RequestMapping("/eduservice/teachers")
 @RestController
 public class EduTeacherController {
@@ -35,7 +38,11 @@ public class EduTeacherController {
 
     @GetMapping("/{id}")
     public Result getTeacherById(@PathVariable String id) {
-        int res = 10 / 0;
+        try {
+            int res = 10 / 0;
+        } catch (ArithmeticException e) {
+            throw new GuliException(StatusCode.ERROR, e.getMessage());
+        }
         EduTeacherPO teacherPO = eduTeacherService.getById(id);
         return Result.ok().data("teacher", teacherPO);
     }
