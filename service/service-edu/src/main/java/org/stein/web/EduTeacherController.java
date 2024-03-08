@@ -4,11 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.stein.handler.exception.GuliException;
 import org.stein.pojo.dto.EduTeacherDTO;
 import org.stein.pojo.po.EduTeacherPO;
 import org.stein.result.Result;
-import org.stein.result.StatusCode;
 import org.stein.service.EduTeacherService;
 
 import java.time.LocalDateTime;
@@ -21,7 +19,7 @@ import java.util.Map;
  * @date 2024/3/6
  */
 @CrossOrigin
-@RequestMapping("/eduservice/teachers")
+@RequestMapping("/edu/service/teachers")
 @RestController
 public class EduTeacherController {
     @Autowired
@@ -38,11 +36,6 @@ public class EduTeacherController {
 
     @GetMapping("/{id}")
     public Result getTeacherById(@PathVariable String id) {
-        try {
-            int res = 10 / 0;
-        } catch (ArithmeticException e) {
-            throw new GuliException(StatusCode.ERROR, e.getMessage());
-        }
         EduTeacherPO teacherPO = eduTeacherService.getById(id);
         return Result.ok().data("teacher", teacherPO);
     }
@@ -78,7 +71,8 @@ public class EduTeacherController {
                         EduTeacherPO::getGmtCreate,
                         begin,
                         end
-                );
+                )
+                .orderByDesc(EduTeacherPO::getGmtCreate);
         eduTeacherService.page(page, lqw);
 
         long total = page.getTotal();
@@ -89,7 +83,9 @@ public class EduTeacherController {
     @GetMapping("/page/{current}/{size}")
     public Result pageTeachers(@PathVariable("current") long current, @PathVariable("size") long size) {
         Page<EduTeacherPO> page = new Page<>(current, size);
-        eduTeacherService.page(page, null);
+        LambdaQueryWrapper<EduTeacherPO> lqw = new LambdaQueryWrapper<>();
+        lqw.orderByDesc(EduTeacherPO::getGmtCreate);
+        eduTeacherService.page(page, lqw);
         long total = page.getTotal();
         List<EduTeacherPO> records = page.getRecords();
         Map<String, Object> data = new HashMap<>();

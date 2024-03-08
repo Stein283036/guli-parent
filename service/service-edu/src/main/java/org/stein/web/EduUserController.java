@@ -8,7 +8,7 @@ import org.stein.result.Result;
  * @date 2024/3/7
  */
 @CrossOrigin
-@RequestMapping("/eduservice/user")
+@RequestMapping("/edu/service/users")
 @RestController
 public class EduUserController {
     @PostMapping("/login")

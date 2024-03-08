@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "aliyun.oss.file.endpoint",
+      "type": "java.lang.String",
+      "description": "Description for aliyun.oss.file.endpoint."
+    },
+    {
+      "name": "aliyun.oss.file.key-id",
+      "type": "java.lang.String",
+      "description": "Description for aliyun.oss.file.key-id."
+    },
+    {
+      "name": "aliyun.oss.file.key-secret",
+      "type": "java.lang.String",
+      "description": "Description for aliyun.oss.file.key-secret."
+    },
+    {
+      "name": "aliyun.oss.file.bucket-name",
+      "type": "java.lang.String",
+      "description": "Description for aliyun.oss.file.bucket-name."
+    }
+  ] }
