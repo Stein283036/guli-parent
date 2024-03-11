@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class GuliException extends RuntimeException{
+public class GuliException extends RuntimeException {
     private Integer code;
 
     public GuliException(Integer code, String message) {

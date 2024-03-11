@@ -16,7 +16,8 @@ public final class Result {
     private String message;
     private Map<String, Object> data = new HashMap<>();
 
-    private Result() {}
+    private Result() {
+    }
 
     public static Result ok() {
         Result result = new Result();
