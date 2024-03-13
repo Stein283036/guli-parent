@@ -5,7 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.stein.converter.EduSubjectPOConverter;
+import org.stein.converter.EduSubjectConverter;
 import org.stein.listener.ExcelSubjectListener;
 import org.stein.mapper.EduSubjectMapper;
 import org.stein.pojo.bo.ExcelSubjectBO;
@@ -49,7 +49,7 @@ public class EduSubjectServiceImpl
 
         // 将所有的一级课程分类转换成 EduSubjectTreeDTO 列表
         List<EduSubjectTreeDTO> eduSubjectTreeDTOList =
-                EduSubjectPOConverter.INSTANCE.subjectPOListToDTOList(subjectFirstList);
+                EduSubjectConverter.INSTANCE.subjectPOListToDTOList(subjectFirstList);
 
         // 遍历所有的一级课程分类，查询出每一个二级课程分类
         eduSubjectTreeDTOList.forEach(subjectFirstDTO -> {
@@ -59,7 +59,7 @@ public class EduSubjectServiceImpl
 
             // 将所有的二级课程分类转换成 EduSubjectTreeDTO 列表
             List<EduSubjectTreeDTO> children =
-                    EduSubjectPOConverter.INSTANCE.subjectPOListToDTOList(subjectSecondList);
+                    EduSubjectConverter.INSTANCE.subjectPOListToDTOList(subjectSecondList);
             subjectFirstDTO.setChildren(children);
         });
 

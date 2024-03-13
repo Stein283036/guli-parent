@@ -12,8 +12,8 @@ import java.util.List;
  * @date 2024/3/11
  */
 @Mapper
-public interface EduSubjectPOConverter {
-    EduSubjectPOConverter INSTANCE = Mappers.getMapper(EduSubjectPOConverter.class);
+public interface EduSubjectConverter {
+    EduSubjectConverter INSTANCE = Mappers.getMapper(EduSubjectConverter.class);
 
     List<EduSubjectTreeDTO> subjectPOListToDTOList(List<EduSubjectPO> subjectPOList);
 }

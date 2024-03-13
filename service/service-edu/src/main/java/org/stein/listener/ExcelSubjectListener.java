@@ -19,8 +19,8 @@ public class ExcelSubjectListener extends AnalysisEventListener<ExcelSubjectBO> 
 
     private final EduSubjectService eduSubjectService;
 
-    public ExcelSubjectListener(EduSubjectService eduSubjectService) {
-        this.eduSubjectService = eduSubjectService;
+    public ExcelSubjectListener(EduSubjectService subjectService) {
+        this.eduSubjectService = subjectService;
     }
 
     @Override

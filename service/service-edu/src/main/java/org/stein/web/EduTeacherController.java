@@ -23,11 +23,11 @@ import java.util.Map;
 @RestController
 public class EduTeacherController {
     @Autowired
-    private EduTeacherService eduTeacherService;
+    private EduTeacherService teacherService;
 
     @PutMapping
-    public Result updateTeacher(@RequestBody EduTeacherPO eduTeacherPO) {
-        boolean res = eduTeacherService.updateById(eduTeacherPO);
+    public Result updateTeacher(@RequestBody EduTeacherPO teacherPO) {
+        boolean res = teacherService.updateById(teacherPO);
         if (res) {
             return Result.ok();
         }
@@ -36,13 +36,13 @@ public class EduTeacherController {
 
     @GetMapping("/{id}")
     public Result getTeacherById(@PathVariable String id) {
-        EduTeacherPO teacherPO = eduTeacherService.getById(id);
+        EduTeacherPO teacherPO = teacherService.getById(id);
         return Result.ok().data("teacher", teacherPO);
     }
 
     @PostMapping
-    public Result saveTeacher(@RequestBody EduTeacherPO eduTeacherPO) {
-        boolean res = eduTeacherService.save(eduTeacherPO);
+    public Result saveTeacher(@RequestBody EduTeacherPO teacherPO) {
+        boolean res = teacherService.save(teacherPO);
         if (res) {
             return Result.ok();
         }
@@ -73,7 +73,7 @@ public class EduTeacherController {
                         end
                 )
                 .orderByDesc(EduTeacherPO::getGmtCreate);
-        eduTeacherService.page(page, lqw);
+        teacherService.page(page, lqw);
 
         long total = page.getTotal();
         List<EduTeacherPO> records = page.getRecords();
@@ -85,7 +85,7 @@ public class EduTeacherController {
         Page<EduTeacherPO> page = new Page<>(current, size);
         LambdaQueryWrapper<EduTeacherPO> lqw = new LambdaQueryWrapper<>();
         lqw.orderByDesc(EduTeacherPO::getGmtCreate);
-        eduTeacherService.page(page, lqw);
+        teacherService.page(page, lqw);
         long total = page.getTotal();
         List<EduTeacherPO> records = page.getRecords();
         Map<String, Object> data = new HashMap<>();
@@ -96,7 +96,7 @@ public class EduTeacherController {
 
     @DeleteMapping("/{id}")
     public Result removeTeacherById(@PathVariable("id") String id) {
-        boolean res = eduTeacherService.removeById(id);
+        boolean res = teacherService.removeById(id);
         if (res) {
             return Result.ok();
         }
@@ -105,7 +105,7 @@ public class EduTeacherController {
 
     @GetMapping
     public Result listTeachers() {
-        List<EduTeacherPO> teachers = eduTeacherService.list(null);
+        List<EduTeacherPO> teachers = teacherService.list(null);
         return Result.ok().data("teachers", teachers);
     }
 }

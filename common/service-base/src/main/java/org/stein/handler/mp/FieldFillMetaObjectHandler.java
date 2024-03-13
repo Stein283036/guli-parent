@@ -16,9 +16,7 @@ public class FieldFillMetaObjectHandler implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
         setFieldValByName("gmtCreate", LocalDateTime.now(), metaObject)
-                .setFieldValByName("gmtModified", LocalDateTime.now(), metaObject)
-                .setFieldValByName("version", 1, metaObject)
-                .setFieldValByName("isDeleted", 0, metaObject);
+                .setFieldValByName("gmtModified", LocalDateTime.now(), metaObject);
     }
 
     @Override
