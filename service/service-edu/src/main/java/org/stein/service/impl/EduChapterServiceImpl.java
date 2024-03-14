@@ -43,7 +43,8 @@ public class EduChapterServiceImpl
             LambdaQueryWrapper<EduSectionPO> lqw2 = new LambdaQueryWrapper<>();
             lqw2
                     .eq(EduSectionPO::getChapterId, chapter.getId())
-                    .eq(EduSectionPO::getCourseId, courseId);
+                    .eq(EduSectionPO::getCourseId, courseId)
+                    .orderByAsc(EduSectionPO::getSort);
             // 根据 chapterId 查询章节下的所有小节
             List<EduSectionPO> sectionPOList = sectionService.list(lqw2);
             List<EduSectionVO> sectionVOList = EduSectionConverter.INSTANCE.sectionPOListToVOList(sectionPOList);
