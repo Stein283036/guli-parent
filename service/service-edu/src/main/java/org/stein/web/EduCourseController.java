@@ -2,8 +2,10 @@ package org.stein.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.stein.handler.exception.GuliException;
 import org.stein.pojo.dto.EduCourseDTO;
 import org.stein.result.Result;
+import org.stein.result.StatusCode;
 import org.stein.service.EduCourseService;
 
 /**
@@ -19,7 +21,9 @@ public class EduCourseController {
 
     @PutMapping
     public Result updateCourse(@RequestBody EduCourseDTO courseDTO) {
-        courseService.updateCourse(courseDTO);
+        if (!courseService.updateCourse(courseDTO)) {
+            throw new GuliException(StatusCode.ERROR);
+        }
         return Result.ok();
     }
 

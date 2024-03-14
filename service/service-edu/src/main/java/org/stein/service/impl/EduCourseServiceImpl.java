@@ -59,15 +59,18 @@ public class EduCourseServiceImpl
         return courseDTO;
     }
 
+    @Transactional
     @Override
-    public void updateCourse(EduCourseDTO courseDTO) {
+    public boolean updateCourse(EduCourseDTO courseDTO) {
         // 修改课程的基本信息
         EduCoursePO coursePO = EduCourseConverter.INSTANCE.courseDTOToCoursePO(courseDTO);
-        updateById(coursePO);
+        boolean res1 = updateById(coursePO);
 
         // 修改课程的描述信息
         EduCourseDescriptionPO courseDescriptionPO =
                 EduCourseDescriptionConverter.INSTANCE.courseDTOTocourseDescriptionPO(courseDTO);
-        courseDescriptionService.updateById(courseDescriptionPO);
+        boolean res2 = courseDescriptionService.updateById(courseDescriptionPO);
+
+        return res1 && res2;
     }
 }

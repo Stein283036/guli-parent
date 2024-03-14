@@ -13,4 +13,6 @@ import java.util.List;
 public interface EduChapterService extends IService<EduChapterPO> {
 
     List<EduChapterTreeVO> treeListSubject(String courseId);
+
+    boolean deleteChapterById(String chapterId);
 }

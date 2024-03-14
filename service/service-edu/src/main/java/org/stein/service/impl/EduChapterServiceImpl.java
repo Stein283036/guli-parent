@@ -32,7 +32,9 @@ public class EduChapterServiceImpl
     public List<EduChapterTreeVO> treeListSubject(String courseId) {
         // 查询所有的章节信息
         LambdaQueryWrapper<EduChapterPO> lqw1 = new LambdaQueryWrapper<>();
-        lqw1.eq(EduChapterPO::getCourseId, courseId);
+        lqw1
+                .eq(EduChapterPO::getCourseId, courseId)
+                .orderByAsc(EduChapterPO::getSort);
         List<EduChapterPO> chapterPOList = list(lqw1);
         List<EduChapterTreeVO> chapters = EduChapterConverter.INSTANCE.chapterPOListToVOList(chapterPOList);
 
@@ -49,5 +51,18 @@ public class EduChapterServiceImpl
         }
 
         return chapters;
+    }
+
+    @Override
+    public boolean deleteChapterById(String chapterId) {
+        LambdaQueryWrapper<EduSectionPO> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(EduSectionPO::getChapterId, chapterId);
+        int count = sectionService.count(lqw);
+        if (count != 0) {
+            // 章节下面有小节，不删除
+            return false;
+        }
+        // 章节下面没有小节，删除章节信息
+        return removeById(chapterId);
     }
 }
