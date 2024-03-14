@@ -13,4 +13,6 @@ public interface EduCourseService extends IService<EduCoursePO> {
     String saveCourse(EduCourseDTO eduCourseDTO);
 
     EduCourseDTO getCourseById(String courseId);
+
+    void updateCourse(EduCourseDTO courseDTO);
 }

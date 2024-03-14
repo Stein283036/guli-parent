@@ -15,11 +15,17 @@ import org.stein.service.EduCourseService;
 @RestController
 public class EduCourseController {
     @Autowired
-    private EduCourseService eduCourseService;
+    private EduCourseService courseService;
+
+    @PutMapping
+    public Result updateCourse(@RequestBody EduCourseDTO courseDTO) {
+        courseService.updateCourse(courseDTO);
+        return Result.ok();
+    }
 
     @GetMapping
     public Result getCourseById(@RequestParam("courseId") String courseId) {
-        EduCourseDTO courseDTO = eduCourseService.getCourseById(courseId);
+        EduCourseDTO courseDTO = courseService.getCourseById(courseId);
         return Result.ok().data("courseInfo", courseDTO);
     }
 
@@ -27,8 +33,8 @@ public class EduCourseController {
      * 添加课程基本信息
      */
     @PostMapping
-    public Result saveCourse(@RequestBody EduCourseDTO eduCourseDTO) {
-        String courseId = eduCourseService.saveCourse(eduCourseDTO);
+    public Result saveCourse(@RequestBody EduCourseDTO courseDTO) {
+        String courseId = courseService.saveCourse(courseDTO);
         return Result.ok().data("courseId", courseId);
     }
 }

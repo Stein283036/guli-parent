@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.stein.converter.EduCourseConverter;
+import org.stein.converter.EduCourseDescriptionConverter;
 import org.stein.handler.exception.GuliException;
 import org.stein.mapper.EduCourseMapper;
 import org.stein.pojo.dto.EduCourseDTO;
@@ -56,5 +57,17 @@ public class EduCourseServiceImpl
         EduCourseDTO courseDTO = EduCourseConverter.INSTANCE.coursePOToCourseDTO(coursePO);
         courseDTO.setDescription(courseDescriptionService.getById(courseId).getDescription());
         return courseDTO;
+    }
+
+    @Override
+    public void updateCourse(EduCourseDTO courseDTO) {
+        // 修改课程的基本信息
+        EduCoursePO coursePO = EduCourseConverter.INSTANCE.courseDTOToCoursePO(courseDTO);
+        updateById(coursePO);
+
+        // 修改课程的描述信息
+        EduCourseDescriptionPO courseDescriptionPO =
+                EduCourseDescriptionConverter.INSTANCE.courseDTOTocourseDescriptionPO(courseDTO);
+        courseDescriptionService.updateById(courseDescriptionPO);
     }
 }
