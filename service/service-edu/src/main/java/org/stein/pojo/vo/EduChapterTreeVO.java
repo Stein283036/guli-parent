@@ -1,4 +1,4 @@
-package org.stein.pojo.dto;
+package org.stein.pojo.vo;
 
 import lombok.Data;
 
@@ -10,10 +10,10 @@ import java.util.List;
  * @date 2024/3/11
  */
 @Data
-public class EduSubjectTreeDTO implements Serializable {
+public class EduChapterTreeVO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String id;
     private String title;
-    private List<EduSubjectTreeDTO> children;
+    private List<EduSectionVO> sections; // 章节下的所有小结
 }

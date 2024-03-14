@@ -9,7 +9,7 @@ import org.stein.converter.EduSubjectConverter;
 import org.stein.listener.ExcelSubjectListener;
 import org.stein.mapper.EduSubjectMapper;
 import org.stein.pojo.bo.ExcelSubjectBO;
-import org.stein.pojo.dto.EduSubjectTreeDTO;
+import org.stein.pojo.vo.EduSubjectTreeVO;
 import org.stein.pojo.po.EduSubjectPO;
 import org.stein.service.EduSubjectService;
 
@@ -41,14 +41,14 @@ public class EduSubjectServiceImpl
     }
 
     @Override
-    public List<EduSubjectTreeDTO> treeListSubject() {
+    public List<EduSubjectTreeVO> treeListSubject() {
         // 查询所有的一级课程分类
         LambdaQueryWrapper<EduSubjectPO> lqw1 = new LambdaQueryWrapper<>();
         lqw1.eq(EduSubjectPO::getParentId, 0);
         List<EduSubjectPO> subjectFirstList = list(lqw1);
 
         // 将所有的一级课程分类转换成 EduSubjectTreeDTO 列表
-        List<EduSubjectTreeDTO> eduSubjectTreeDTOList =
+        List<EduSubjectTreeVO> eduSubjectTreeDTOList =
                 EduSubjectConverter.INSTANCE.subjectPOListToDTOList(subjectFirstList);
 
         // 遍历所有的一级课程分类，查询出每一个二级课程分类
@@ -58,7 +58,7 @@ public class EduSubjectServiceImpl
             List<EduSubjectPO> subjectSecondList = list(lqw2);
 
             // 将所有的二级课程分类转换成 EduSubjectTreeDTO 列表
-            List<EduSubjectTreeDTO> children =
+            List<EduSubjectTreeVO> children =
                     EduSubjectConverter.INSTANCE.subjectPOListToDTOList(subjectSecondList);
             subjectFirstDTO.setChildren(children);
         });

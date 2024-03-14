@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.stein.pojo.dto.EduSubjectTreeDTO;
+import org.stein.pojo.vo.EduSubjectTreeVO;
 import org.stein.pojo.po.EduSubjectPO;
 import org.stein.result.Result;
 import org.stein.service.EduSubjectService;
@@ -42,7 +42,7 @@ public class EduSubjectController {
 
     @GetMapping("/tree")
     public Result treeListSubject() {
-        List<EduSubjectTreeDTO> subjects = eduSubjectService.treeListSubject();
+        List<EduSubjectTreeVO> subjects = eduSubjectService.treeListSubject();
         return Result.ok().data("subjects", subjects);
     }
 
