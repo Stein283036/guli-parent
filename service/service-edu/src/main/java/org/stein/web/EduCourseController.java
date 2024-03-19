@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.stein.handler.exception.GuliException;
 import org.stein.pojo.dto.EduCourseDTO;
+import org.stein.pojo.vo.EduCoursePublishVO;
 import org.stein.result.Result;
 import org.stein.result.StatusCode;
 import org.stein.service.EduCourseService;
@@ -18,6 +19,17 @@ import org.stein.service.EduCourseService;
 public class EduCourseController {
     @Autowired
     private EduCourseService courseService;
+
+    @PostMapping("/publish/{courseId}")
+        public Result publishCourse(@PathVariable("courseId") String courseId) {
+        return courseService.publishCourse(courseId) ? Result.ok() : Result.error();
+    }
+
+    @GetMapping("/publish/{courseId}")
+    public Result getCoursePublishInfoByCourseId(@PathVariable("courseId") String courseId) {
+        EduCoursePublishVO coursePublishVO = courseService.getCoursePublishInfoByCourseId(courseId);
+        return Result.ok().data("coursePublishInfo", coursePublishVO);
+    }
 
     @PutMapping
     public Result updateCourse(@RequestBody EduCourseDTO courseDTO) {

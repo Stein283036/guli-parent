@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.stein.mapper.EduCourseMapper">
+
+    <!-- int publishCourse(@Param("courseId") String courseId); -->
+    <update id="publishCourse">
+        update edu_course
+        set status = 'Normal'
+        where id = #{courseId}
+    </update>
+
+    <!-- EduCourseVO selectCoursePublishInfo(@Param("courseId") String courseId); -->
+    <select id="selectCoursePublishInfo" resultType="org.stein.pojo.vo.EduCoursePublishVO">
+        select ec.id,
+               ec.cover,
+               ec.title,
+               ec.price,
+               ec.lesson_sum,
+               ecd.description,
+               et.name   as teacherName,
+               es1.title as subjectFirstTitle,
+               es2.title as subjectSecondTitle
+        from edu_course ec
+                 left join edu_course_description ecd
+                           on ec.id = ecd.id
+                 left join edu_teacher et
+                           on ec.teacher_id = et.id
+                 left join edu_subject es1
+                           on ec.subject_parent_id = es1.id
+                 left join edu_subject es2
+                           on ec.subject_id = es2.id
+        where ec.id = #{courseId}
+    </select>
+</mapper>

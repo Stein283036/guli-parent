@@ -12,6 +12,7 @@ import org.stein.mapper.EduCourseMapper;
 import org.stein.pojo.dto.EduCourseDTO;
 import org.stein.pojo.po.EduCourseDescriptionPO;
 import org.stein.pojo.po.EduCoursePO;
+import org.stein.pojo.vo.EduCoursePublishVO;
 import org.stein.result.StatusCode;
 import org.stein.service.EduCourseDescriptionService;
 import org.stein.service.EduCourseService;
@@ -72,5 +73,15 @@ public class EduCourseServiceImpl
         boolean res2 = courseDescriptionService.updateById(courseDescriptionPO);
 
         return res1 && res2;
+    }
+
+    @Override
+    public EduCoursePublishVO getCoursePublishInfoByCourseId(String courseId) {
+        return baseMapper.selectCoursePublishInfo(courseId);
+    }
+
+    @Override
+    public boolean publishCourse(String courseId) {
+        return baseMapper.publishCourse(courseId) > 0;
     }
 }
