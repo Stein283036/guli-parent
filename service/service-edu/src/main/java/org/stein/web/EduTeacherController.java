@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.stein.pojo.dto.EduTeacherDTO;
+import org.stein.pojo.query.EduTeacherQuery;
 import org.stein.pojo.po.EduTeacherPO;
 import org.stein.result.Result;
 import org.stein.service.EduTeacherService;
@@ -53,7 +53,7 @@ public class EduTeacherController {
     public Result pageTeachersWithCondition(
             @PathVariable long current,
             @PathVariable long size,
-            EduTeacherDTO teacherDTO
+            EduTeacherQuery teacherDTO
     ) {
         Page<EduTeacherPO> page = new Page<>(current, size);
         LambdaQueryWrapper<EduTeacherPO> lqw = new LambdaQueryWrapper<>();

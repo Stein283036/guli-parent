@@ -1,21 +1,28 @@
 package org.stein.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.stein.base.CommonObject;
 import org.stein.converter.EduCourseConverter;
 import org.stein.converter.EduCourseDescriptionConverter;
 import org.stein.handler.exception.GuliException;
 import org.stein.mapper.EduCourseMapper;
 import org.stein.pojo.dto.EduCourseDTO;
+import org.stein.pojo.po.EduChapterPO;
 import org.stein.pojo.po.EduCourseDescriptionPO;
 import org.stein.pojo.po.EduCoursePO;
+import org.stein.pojo.po.EduSectionPO;
+import org.stein.pojo.query.EduCourseQuery;
 import org.stein.pojo.vo.EduCoursePublishVO;
 import org.stein.result.StatusCode;
+import org.stein.service.EduChapterService;
 import org.stein.service.EduCourseDescriptionService;
 import org.stein.service.EduCourseService;
+import org.stein.service.EduSectionService;
 
 /**
  * @author stein
@@ -28,6 +35,12 @@ public class EduCourseServiceImpl
 
     @Autowired
     private EduCourseDescriptionService courseDescriptionService;
+
+    @Autowired
+    private EduSectionService sectionService;
+
+    @Autowired
+    private EduChapterService chapterService;
 
     @Transactional
     @Override
@@ -83,5 +96,46 @@ public class EduCourseServiceImpl
     @Override
     public boolean publishCourse(String courseId) {
         return baseMapper.publishCourse(courseId) > 0;
+    }
+
+    @Override
+    public Page<EduCoursePO> pageCoursesWithCondition(Long current, Long size, EduCourseQuery courseQuery) {
+        Page<EduCoursePO> page = new Page<>(current, size);
+        LambdaQueryWrapper<EduCoursePO> lqw = new LambdaQueryWrapper<>();
+        String title = courseQuery.getTitle();
+        String status = courseQuery.getStatus();
+        lqw
+                .like(title != null, EduCoursePO::getTitle, title)
+                .eq(status != null, EduCoursePO::getStatus, status)
+                .orderByDesc(CommonObject::getGmtCreate);
+        page(page, lqw);
+        return page;
+    }
+
+    @Transactional
+    @Override
+    public boolean removeCourseWithCascadeById(String courseId) {
+        // 删除课程小节 edu_section
+        // TODO 删除小节视频
+        LambdaQueryWrapper<EduSectionPO> lqw1 = new LambdaQueryWrapper<>();
+        lqw1.eq(courseId != null, EduSectionPO::getCourseId, courseId);
+        boolean res1 = sectionService.remove(lqw1);
+
+        // 删除课程章节 edu_chapter
+        LambdaQueryWrapper<EduChapterPO> lqw2 = new LambdaQueryWrapper<>();
+        lqw2.eq(courseId != null, EduChapterPO::getCourseId, courseId);
+        boolean res2 = chapterService.remove(lqw2);
+
+        // 删除课程描述 edu_course_description
+        LambdaQueryWrapper<EduCourseDescriptionPO> lqw3 = new LambdaQueryWrapper<>();
+        lqw3.eq(courseId != null, EduCourseDescriptionPO::getId, courseId);
+        boolean res3 = courseDescriptionService.remove(lqw3);
+
+        // 删除课程信息 edu_course
+        LambdaQueryWrapper<EduCoursePO> lqw4 = new LambdaQueryWrapper<>();
+        lqw4.eq(courseId != null, EduCoursePO::getId, courseId);
+        boolean res4 = remove(lqw4);
+
+        return res1 && res2 && res3 && res4;
     }
 }

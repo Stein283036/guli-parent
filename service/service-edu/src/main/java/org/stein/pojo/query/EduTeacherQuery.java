@@ -1,4 +1,4 @@
-package org.stein.pojo.dto;
+package org.stein.pojo.query;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  * @date 2024/3/6
  */
 @Data
-public class EduTeacherDTO implements Serializable {
+public class EduTeacherQuery implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String name;

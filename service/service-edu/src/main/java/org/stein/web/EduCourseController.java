@@ -1,9 +1,12 @@
 package org.stein.web;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.stein.handler.exception.GuliException;
 import org.stein.pojo.dto.EduCourseDTO;
+import org.stein.pojo.po.EduCoursePO;
+import org.stein.pojo.query.EduCourseQuery;
 import org.stein.pojo.vo.EduCoursePublishVO;
 import org.stein.result.Result;
 import org.stein.result.StatusCode;
@@ -20,8 +23,30 @@ public class EduCourseController {
     @Autowired
     private EduCourseService courseService;
 
+    @DeleteMapping("/{courseId}")
+    public Result removeCourseByIdWithCascade(@PathVariable("courseId") String courseId) {
+        return courseService.removeCourseWithCascadeById(courseId) ? Result.ok() : Result.error();
+    }
+
+    @GetMapping("/page/condition/{current}/{size}")
+    public Result pageCoursesWithCondition(
+            @PathVariable("current") Long current,
+            @PathVariable("size") Long size,
+            EduCourseQuery courseQuery
+    ) {
+        Page<EduCoursePO> page = courseService.pageCoursesWithCondition(current, size, courseQuery);
+        return Result.ok().data("total", page.getTotal()).data("courses", page.getRecords());
+    }
+
+    @GetMapping("/page/{current}/{size}")
+    public Result pageCourses(@PathVariable("current") Long current, @PathVariable("size") Long size) {
+        Page<EduCoursePO> page = new Page<>(current, size);
+        courseService.page(page, null);
+        return Result.ok().data("total", page.getTotal()).data("courses", page.getRecords());
+    }
+
     @PostMapping("/publish/{courseId}")
-        public Result publishCourse(@PathVariable("courseId") String courseId) {
+    public Result publishCourse(@PathVariable("courseId") String courseId) {
         return courseService.publishCourse(courseId) ? Result.ok() : Result.error();
     }
 
