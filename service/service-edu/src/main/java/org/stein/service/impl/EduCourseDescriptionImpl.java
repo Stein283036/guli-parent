@@ -6,7 +6,7 @@ import org.stein.mapper.EduCourseDescriptionMapper;
 import org.stein.pojo.po.EduCourseDescriptionPO;
 import org.stein.service.EduCourseDescriptionService;
 
-/**
+/**stein
  * @author stein
  * @date 2024/3/11
  */
@@ -14,5 +14,5 @@ import org.stein.service.EduCourseDescriptionService;
 public class EduCourseDescriptionImpl
         extends ServiceImpl<EduCourseDescriptionMapper, EduCourseDescriptionPO>
         implements EduCourseDescriptionService {
-    
+
 }

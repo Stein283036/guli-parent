@@ -2,8 +2,8 @@ package org.stein.converter;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import org.stein.pojo.vo.EduSubjectTreeVO;
 import org.stein.pojo.po.EduSubjectPO;
+import org.stein.pojo.vo.EduSubjectTreeVO;
 
 import java.util.List;
 
