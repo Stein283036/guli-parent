@@ -6,7 +6,7 @@
     <!-- debug:当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false。 -->
 
     <contextName>logback</contextName>
-    <property name="log.path" value="D:/projects/Java/guli-parent/logs"/>
+    <property name="log.path" value="D:/projects/Java/guli-edu/guli-parent/logs"/>
 
     <property name="CONSOLE_LOG_PATTERN"
               value="%yellow(%date{yyyy-MM-dd HH:mm:ss}) |%highlight(%-5level) |%blue(%thread) |%blue(%file:%line) |%green(%logger) |%cyan(%msg%n)"/>

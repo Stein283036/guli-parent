@@ -9,4 +9,5 @@ import org.stein.pojo.po.EduSectionPO;
  */
 public interface EduSectionService extends IService<EduSectionPO> {
 
+    void deleteSectionById(String sectionId);
 }

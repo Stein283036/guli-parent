@@ -31,7 +31,7 @@ public class EduSectionController {
 
     @DeleteMapping("/{sectionId}")
     public Result deleteSectionById(@PathVariable("sectionId") String sectionId) {
-        sectionService.removeById(sectionId);
+        sectionService.deleteSectionById(sectionId);
         return Result.ok();
     }
 

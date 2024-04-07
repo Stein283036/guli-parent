@@ -2,18 +2,17 @@ package org.stein;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author stein
- * @date 2024/3/6
+ * @date 2024/3/21
  */
-@EnableFeignClients
 @EnableDiscoveryClient
-@SpringBootApplication
-public class EduApplication {
+@SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
+public class EduAliyunVodApplication {
     public static void main(String[] args) {
-        SpringApplication.run(EduApplication.class, args);
+        SpringApplication.run(EduAliyunVodApplication.class);
     }
 }

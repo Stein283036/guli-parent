@@ -24,6 +24,8 @@ import org.stein.service.EduCourseDescriptionService;
 import org.stein.service.EduCourseService;
 import org.stein.service.EduSectionService;
 
+import java.util.List;
+
 /**
  * @author stein
  * @date 2024/3/11
@@ -116,10 +118,12 @@ public class EduCourseServiceImpl
     @Override
     public boolean removeCourseWithCascadeById(String courseId) {
         // 删除课程小节 edu_section
-        // TODO 删除小节视频
         LambdaQueryWrapper<EduSectionPO> lqw1 = new LambdaQueryWrapper<>();
         lqw1.eq(courseId != null, EduSectionPO::getCourseId, courseId);
-        boolean res1 = sectionService.remove(lqw1);
+        List<EduSectionPO> sectionPOList = sectionService.list(lqw1);
+        for (EduSectionPO sectionPO : sectionPOList) {
+            sectionService.deleteSectionById(sectionPO.getId());
+        }
 
         // 删除课程章节 edu_chapter
         LambdaQueryWrapper<EduChapterPO> lqw2 = new LambdaQueryWrapper<>();
@@ -136,6 +140,6 @@ public class EduCourseServiceImpl
         lqw4.eq(courseId != null, EduCoursePO::getId, courseId);
         boolean res4 = remove(lqw4);
 
-        return res1 && res2 && res3 && res4;
+        return res2 && res3 && res4;
     }
 }

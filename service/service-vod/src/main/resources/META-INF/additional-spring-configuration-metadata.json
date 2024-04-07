@@ -1,0 +1,14 @@
+{
+  "properties": [
+    {
+      "name": "alibaba.cloud.access-key-id",
+      "type": "java.lang.String",
+      "description": "Description for alibaba.cloud.access-key-id."
+    },
+    {
+      "name": "alibaba.cloud.access-key-secret",
+      "type": "java.lang.String",
+      "description": "Description for alibaba.cloud.access-key-secret."
+    }
+  ]
+}
